@@ -1,8 +1,6 @@
-﻿using Aspire.Hosting;
-using Aspire.Hosting.ApplicationModel;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 
-namespace Raygun4Aspire
+namespace Aspire.Hosting.ApplicationModel
 {
   public static class RaygunAspireWebAppBuilderExtensions
   {

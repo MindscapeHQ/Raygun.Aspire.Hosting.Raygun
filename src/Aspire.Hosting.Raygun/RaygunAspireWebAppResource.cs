@@ -1,6 +1,4 @@
-﻿using Aspire.Hosting.ApplicationModel;
-
-namespace Raygun4Aspire
+﻿namespace Aspire.Hosting.ApplicationModel
 {
   public class RaygunAspireWebAppResource : ContainerResource
   {
