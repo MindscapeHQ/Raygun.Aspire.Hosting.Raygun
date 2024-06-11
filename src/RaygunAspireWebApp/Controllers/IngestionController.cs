@@ -10,7 +10,7 @@ namespace RaygunAspireWebApp.Controllers
   {
     public const string ErrorsFolderPath = "/app/raygun/errors";
 
-    // If changing this limit, also update it in the README and public-site documentation:
+    // If changing this limit, also update it in the public-site documentation:
     private const int RetentionCount = 1000;
 
     private RaygunClient _raygunClient;
