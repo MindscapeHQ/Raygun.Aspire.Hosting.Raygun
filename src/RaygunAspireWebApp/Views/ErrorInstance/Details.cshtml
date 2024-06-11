@@ -39,14 +39,11 @@
       </h2>
       <p id="occurredOnHeading" class="font-opensans--14--32--600 color--color-text-low-emphasis margin-bottom--12">@Model.RaygunMessage.OccurredOn.ToString("MM/dd/yyyy hh:mm:ss")</p>
     </div>
-
-    @if (Model?.AierEnabled == true)
-    {
-      <button id="ai-error-res-btn" class="rg margin-bottom--12" onclick="handleAIChatOpened()">
-        <i id="ai-res-icon" class="ai-small"></i>
-        AI Error Resolution
-      </button>
-    }
+    
+    <button id="ai-error-res-btn" class="rg margin-bottom--12" onclick="handleAIChatOpened('@Json.Serialize(@Model?.AierEnabled)')">
+                                                                                                                                 <i id="ai-res-icon" class="ai-small"></i>
+      AI Error Resolution
+    </button>
   </div>
 
   <ul class="tab-group clearfix font-opensans--14--32--600 color--color-text-default margin-top--24">
@@ -105,7 +102,7 @@
     xhr.send();
   });
 
-  function handleAIChatOpened() {
+  function handleAIChatOpened(aierEnabled) {
     document.getElementById("tab-content").classList.add("responsive-width--half");
 
     setChatWindowWidth();
@@ -119,7 +116,12 @@
     document.getElementById("ai-error-res-btn").disabled = true;
     document.getElementById("ai-res-icon").style.backgroundColor = "var(--color-text-button-disabled)";
 
-    if (!aierInProgress) {
+
+    aierEnabled = (aierEnabled === "true" || aierEnabled === true);
+
+    if (!aierInProgress && aierEnabled) {
+      hideDocs();
+      
       aierInProgress = true;
       aierContent = '';
       
@@ -141,15 +143,24 @@
         displayErrorSection();
       };
       xhr.send();
+    } else if (!aierEnabled) {
+      displayDocs();
     }
   }
   
   function displayErrorSection()
   {
     document.getElementById("loading-section").classList.add("display--none");
-    document.getElementById("loading-section").classList.add("display--none");
     document.getElementById("download-progress-section").classList.add("display--none");
     document.getElementById("error-section").classList.remove("display--none");
+  }
+  
+  function displayDocs() {
+    document.getElementById("docs-section").classList.remove("display--none");
+  }
+  
+  function hideDocs() {
+    document.getElementById("docs-section").classList.add("display--none");
   }
   
   function setChatWindowWidth() {
