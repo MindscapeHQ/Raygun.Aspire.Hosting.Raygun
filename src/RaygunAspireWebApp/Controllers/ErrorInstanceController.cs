@@ -11,9 +11,9 @@ namespace RaygunAspireWebApp.Controllers
 {
   public class ErrorInstanceController : Controller
   {
-    private RaygunClient _raygunClient;
-    private IHubContext<AierHub> _aierHubContext;
-    private IOllamaApiClient? _ollamaClient;
+    private readonly RaygunClient _raygunClient;
+    private readonly IHubContext<AierHub> _aierHubContext;
+    private readonly IOllamaApiClient? _ollamaClient;
 
     private static CancellationTokenSource? _cancellationTokenSource;
 
@@ -216,10 +216,7 @@ namespace RaygunAspireWebApp.Controllers
 
     public IActionResult CancelAier()
     {
-      if (_cancellationTokenSource != null)
-      {
-        _cancellationTokenSource.Cancel();
-      }
+      _cancellationTokenSource?.Cancel();
 
       return Ok();
     }

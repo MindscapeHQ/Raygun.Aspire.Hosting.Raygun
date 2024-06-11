@@ -13,7 +13,7 @@ namespace RaygunAspireWebApp.Controllers
     // If changing this limit, also update it in the public-site documentation:
     private const int RetentionCount = 1000;
 
-    private RaygunClient _raygunClient;
+    private readonly RaygunClient _raygunClient;
 
     public IngestionController(RaygunClient raygunClient)
     {
@@ -57,7 +57,7 @@ namespace RaygunAspireWebApp.Controllers
       return Accepted();
     }
 
-    private void EnforceRetentionAsync()
+    private static void EnforceRetentionAsync()
     {
       var files = Directory.GetFiles(ErrorsFolderPath)
             .Select(filePath => new FileInfo(filePath))
