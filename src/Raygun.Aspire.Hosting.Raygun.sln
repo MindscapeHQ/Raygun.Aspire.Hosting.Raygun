@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.34707.107
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaygunAspireWebApp", "RaygunAspireWebApp\RaygunAspireWebApp.csproj", "{7382213A-15D4-473E-99C4-6F00683A0DCB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Hosting.Raygun", "Aspire.Hosting.Raygun\Aspire.Hosting.Raygun.csproj", "{92761B21-B83A-45FD-A1DC-98733533872F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raygun.Aspire.Hosting.Raygun", "Raygun.Aspire.Hosting.Raygun\Raygun.Aspire.Hosting.Raygun.csproj", "{92761B21-B83A-45FD-A1DC-98733533872F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
