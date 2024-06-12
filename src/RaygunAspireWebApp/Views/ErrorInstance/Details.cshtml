@@ -41,7 +41,7 @@
     </div>
     
     <button id="ai-error-res-btn" class="rg margin-bottom--12" onclick="handleAIChatOpened('@Json.Serialize(@Model?.AierEnabled)')">
-                                                                                                                                 <i id="ai-res-icon" class="ai-small"></i>
+      <i id="ai-res-icon" class="ai-small"></i>
       AI Error Resolution
     </button>
   </div>
@@ -93,6 +93,8 @@
 </script>
 
 <script>
+  let chatSections = ["docs-section", "loading-section", "download-progress-section", "error-section", "messages-list-section"];
+  
   let aierInProgress = false;
   let aierContent = '';
 
@@ -120,13 +122,10 @@
     aierEnabled = (aierEnabled === "true" || aierEnabled === true);
 
     if (!aierInProgress && aierEnabled) {
-      hideDocs();
-      
       aierInProgress = true;
       aierContent = '';
-      
-      var progressSection = document.getElementById('loading-section');
-      progressSection.classList.remove("display--none");
+
+      showSection("loading-section");
 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '/ErrorInstance/StartAier', true);
@@ -135,32 +134,27 @@
           var status = xhr.status;
 
           if (status === 500) {
-            displayErrorSection();
+            showSection("error-section");
           }
         }
       };
       xhr.onerror = function () {
-        displayErrorSection();
+        showSection("error-section");
       };
       xhr.send();
     } else if (!aierEnabled) {
-      displayDocs();
+      showSection("docs-section");
     }
   }
   
-  function displayErrorSection()
-  {
-    document.getElementById("loading-section").classList.add("display--none");
-    document.getElementById("download-progress-section").classList.add("display--none");
-    document.getElementById("error-section").classList.remove("display--none");
-  }
-  
-  function displayDocs() {
-    document.getElementById("docs-section").classList.remove("display--none");
-  }
-  
-  function hideDocs() {
-    document.getElementById("docs-section").classList.add("display--none");
+  function showSection(toDisplay) {
+    chatSections.filter(function(item) {
+      return item !== toDisplay;
+    }).forEach(function(item) {
+      document.getElementById(item).classList.add("display--none");
+    });
+    
+    document.getElementById(toDisplay).classList.remove("display--none");
   }
   
   function setChatWindowWidth() {
@@ -169,21 +163,19 @@
     // Set the width of the second element
     $("#ai-chat-container").width(width);
   }
+
 </script>
 
 <script>
   const connection = new signalR.HubConnectionBuilder().withUrl("/aierHub").build();
 
   connection.on("ReceiveText", function (text) {
-    document.getElementById('loading-section').classList.add("display--none");
-    document.getElementById('download-progress-section').classList.add("display--none");
+    showSection("messages-list-section");
 
     aierContent += text;
-    
     const htmlContent = marked.parse(aierContent);
 
     var messageList = document.getElementById('messages-list-section');
-    messageList.classList.remove("display--none");
     messageList.innerHTML = htmlContent;
     
     Prism.highlightAllUnder(messageList);
@@ -191,15 +183,13 @@
   
   connection.on("DownloadModelProgress", function (percentage) {
     if (percentage === 100) {
-      document.getElementById('loading-section').classList.remove("display--none");
-      document.getElementById('download-progress-section').classList.add("display--none");
+      showSection("loading-section");
     }
     else {
       var progressBar = document.getElementById('download-progress-bar');
       progressBar.style.width = percentage + '%';
 
-      document.getElementById('loading-section').classList.add("display--none");
-      document.getElementById('download-progress-section').classList.remove("display--none");
+      showSection("download-progress-section");
     }
   });
 
