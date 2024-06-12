@@ -1,15 +1,15 @@
-# Aspire.Hosting.Raygun
+# Raygun.Aspire.Hosting.Raygun
 
 A locally running [Raygun Crash Reporting](https://raygun.com/platform/crash-reporting) portal for your Aspire orchestrator.
 
 # Installation
 
-## Step 1 - Install the Aspire.Hosting.Raygun NuGet package
+## Step 1 - Install the Raygun.Aspire.Hosting.Raygun NuGet package
 
-Install the [Aspire.Hosting.Raygun NuGet package](https://www.nuget.org/packages/Aspire.Hosting.Raygun) into your **Aspire orchestration project (AppHost)**. Either use the NuGet package management GUI in the IDE you use, OR use the below dotnet command.
+Install the [Raygun.Aspire.Hosting.Raygun NuGet package](https://www.nuget.org/packages/Raygun.Aspire.Hosting.Raygun) into your **Aspire orchestration project (AppHost)**. Either use the NuGet package management GUI in the IDE you use, OR use the below dotnet command.
 
 ```bash
-dotnet add package Aspire.Hosting.Raygun
+dotnet add package Raygun.Aspire.Hosting.Raygun
 ```
 
 ## Step 2 - Add Raygun to the orchestration builder

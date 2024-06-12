@@ -5,11 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Aspire.Hosting.Raygun</Title>
+    <Title>Raygun.Aspire.Hosting.Raygun</Title>
     <Company>Raygun</Company>
     <Authors>Raygun</Authors>
     <Description>A locally running Raygun Crash Reporting portal for your Aspire orchestrator.</Description>
-    <PackageId>Aspire.Hosting.Raygun</PackageId>
+    <PackageId>Raygun.Aspire.Hosting.Raygun</PackageId>
     <IsPackable>true</IsPackable>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIconUrl>https://app.raygun.com/Content/Images/nuget-icon.png</PackageIconUrl>
