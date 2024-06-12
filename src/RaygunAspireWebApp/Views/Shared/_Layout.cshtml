@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Reflection
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -59,7 +61,7 @@
       <a class="footer--text display--flex text-align--left margin-left--24" href="https://github.com/MindscapeHQ/raygun4aspire/issues" target="_blank">Help / Support</a>
       <a class="footer--text display--flex text-align--left margin-left--24" href="/home/privacy">Privacy</a>
       
-      <a class="footer--text display--flex text-align--right margin-right--24 margin-left--auto" href="https://raygun.com" target="_blank">&copy; 2024 - Raygun</a>
+      <a class="footer--text display--flex text-align--right margin-right--24 margin-left--auto" href="https://raygun.com" target="_blank">@GetVersionString() &copy; 2024 - Raygun</a>
     </div>
   </footer>
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -68,3 +70,11 @@
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+@{
+  string GetVersionString()
+  {
+    var version = Assembly.GetExecutingAssembly().GetName().Version;
+    return version == null ? "" : $"v{version.Major}.{version.Minor}.{version.Build}";
+  }
+}

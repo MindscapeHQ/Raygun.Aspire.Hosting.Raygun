@@ -1,4 +1,4 @@
-# Change Log for Aspire.Hosting.Raygun
+# Change Log for Raygun.Aspire.Hosting.Raygun
 
 ### v2.0.0
 - Added AI Error Resolution - Get AI suggestions to resolve exceptions via a locally running LLM in an Ollama container. This is an optional opt-in feature.
