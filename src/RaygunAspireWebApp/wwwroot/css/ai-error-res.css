@@ -104,6 +104,14 @@
   }
 }
 
+.margin-top--16pc-responsive {
+  margin-top: 16%;
+
+  @media only screen and (max-width: 1012px) {
+    margin-top: 0px;
+  }
+}
+
 .margin-top--8pc-responsive {
   margin-top: 8%;
 
