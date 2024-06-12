@@ -81,6 +81,8 @@ namespace RaygunAspireWebApp.Controllers
 
       _cancellationTokenSource = new CancellationTokenSource();
 
+      var prompt = BuildPrompt();
+
       try
       {
         await EnsureModel();
@@ -91,8 +93,6 @@ namespace RaygunAspireWebApp.Controllers
         await _raygunClient.SendInBackground(ex);
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
-
-      var prompt = BuildPrompt();
 
       try
       {
