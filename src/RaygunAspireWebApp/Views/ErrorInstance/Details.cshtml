@@ -37,7 +37,7 @@
       <h2 title="@Model?.RaygunMessage?.Details?.Error?.Message" class="error-heading font-opensans--18--28--600 color--color-text-default margin-bottom--12">
         @BuildHeading(Model?.RaygunMessage?.Details?.Error?.ClassName, Model?.RaygunMessage?.Details?.Error?.Message)
       </h2>
-      <p id="occurredOnHeading" class="font-opensans--14--32--600 color--color-text-low-emphasis margin-bottom--12">@Model.RaygunMessage.OccurredOn.ToString("MM/dd/yyyy hh:mm:ss")</p>
+      <p id="occurredOnHeading" class="font-opensans--14--32--600 color--color-text-low-emphasis margin-bottom--12">@Model.RaygunMessage.OccurredOn.ToString("MM/dd/yyyy HH:mm:ss")</p>
     </div>
     
     <button id="ai-error-res-btn" class="rg margin-bottom--12" onclick="handleAIChatOpened('@Json.Serialize(@Model?.AierEnabled)')">
