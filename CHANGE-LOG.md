@@ -1,5 +1,8 @@
 # Change Log for Raygun.Aspire.Hosting.Raygun
 
+### v2.0.1
+- Fixed a bug where new exception reports would be displayed as occurring 12 hours ago if they occurred after midday UTC (because of formatting dates with 12 hour time instead of 24 hour time - losing the precision for subsequent time logic).
+
 ### v2.0.0
 - Added AI Error Resolution - Get AI suggestions to resolve exceptions via a locally running LLM in an Ollama container. This is an optional opt-in feature.
 - Fixed a bug where exception messages containing characters that can't be used in file names wouldn't persist.
