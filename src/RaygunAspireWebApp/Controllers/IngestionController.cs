@@ -25,7 +25,7 @@ namespace RaygunAspireWebApp.Controllers
       try
       {
         using var reader = new StreamReader(Request.Body, Encoding.UTF8);
-        string requestBody = await reader.ReadToEndAsync();
+        var requestBody = await reader.ReadToEndAsync();
 
         var raygunMessage = JsonSerializer.Deserialize<Mindscape.Raygun4Net.RaygunMessage>(requestBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new RaygunIdentifierMessageConverter() } });
 
@@ -41,9 +41,17 @@ namespace RaygunAspireWebApp.Controllers
             message = "Unknown error";
           }
 
-          string noAsterisk = message.Replace("*", "");
-          string encodedMessage = HttpUtility.UrlEncode(noAsterisk);
-          System.IO.File.WriteAllText($"{ErrorsFolderPath}/{uniqueSlug}-{encodedMessage}.json", requestBody);
+          var noAsterisk = message.Replace("*", "");
+          var encodedMessage = HttpUtility.UrlEncode(noAsterisk);
+
+          var fileName = BuildFileName(uniqueSlug, encodedMessage);
+          if (fileName.Length > 255)
+          {
+            encodedMessage = encodedMessage.Substring(0, encodedMessage.Length - (fileName.Length - 255) - 3) + "...";
+            fileName = BuildFileName(uniqueSlug, encodedMessage);
+          }
+
+          System.IO.File.WriteAllText($"{ErrorsFolderPath}/{fileName}", requestBody);
 
           EnforceRetentionAsync();
         }
@@ -55,6 +63,11 @@ namespace RaygunAspireWebApp.Controllers
       }
 
       return Accepted();
+    }
+
+    private string BuildFileName(long uniqueSlug, string encodedMessage)
+    {
+      return $"{uniqueSlug}-{encodedMessage}.json";
     }
 
     private static void EnforceRetentionAsync()
