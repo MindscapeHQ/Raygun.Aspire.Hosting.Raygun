@@ -62,7 +62,7 @@ namespace RaygunAspireWebApp.Controllers
         fileName = fileName.Substring(index + 1);
       }
 
-      string decodedFilename = HttpUtility.UrlDecode(fileName);
+      var decodedFilename = HttpUtility.UrlDecode(fileName);
 
       if (decodedFilename.EndsWith(".json"))
       {
@@ -71,7 +71,7 @@ namespace RaygunAspireWebApp.Controllers
 
       return new ErrorInstanceRow
       {
-        Timestamp = fileInfo.LastWriteTime,
+        Timestamp = fileInfo.LastWriteTimeUtc,
         Name = decodedFilename,
         Id = id
       };
