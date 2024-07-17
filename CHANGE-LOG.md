@@ -1,5 +1,8 @@
 # Change Log for Raygun.Aspire.Hosting.Raygun
 
+### v2.0.2
+- Fixed a bug where exceptions with long message names could not be saved.
+
 ### v2.0.1
 - Fixed a bug where new exception reports would be displayed as occurring 12 hours ago if they occurred after midday UTC (because of formatting dates with 12 hour time instead of 24 hour time - losing the precision for subsequent time logic).
 
