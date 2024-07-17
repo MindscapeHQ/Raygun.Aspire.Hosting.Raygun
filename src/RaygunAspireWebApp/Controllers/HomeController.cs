@@ -71,7 +71,7 @@ namespace RaygunAspireWebApp.Controllers
 
       return new ErrorInstanceRow
       {
-        Timestamp = fileInfo.LastWriteTime,
+        Timestamp = fileInfo.LastWriteTimeUtc,
         Name = decodedFilename,
         Id = id
       };
