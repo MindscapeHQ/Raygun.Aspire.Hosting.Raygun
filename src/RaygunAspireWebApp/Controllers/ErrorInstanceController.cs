@@ -6,6 +6,7 @@ using RaygunAspireWebApp.Hubs;
 using RaygunAspireWebApp.Models;
 using System.Text.Json;
 using OllamaSharp;
+using RaygunAspireWebApp.Configuraiton;
 
 namespace RaygunAspireWebApp.Controllers
 {
@@ -14,13 +15,15 @@ namespace RaygunAspireWebApp.Controllers
     private readonly RaygunClient _raygunClient;
     private readonly IHubContext<AierHub> _aierHubContext;
     private readonly IOllamaApiClient? _ollamaClient;
+    private readonly OllamaOptions _ollamaOptions;
 
     private static CancellationTokenSource? _cancellationTokenSource;
 
-    public ErrorInstanceController(RaygunClient raygunClient, IHubContext<AierHub> aierHubContext, IOllamaApiClient? ollamaClient = null)
+    public ErrorInstanceController(RaygunClient raygunClient, IHubContext<AierHub> aierHubContext, OllamaOptions ollamaOptions, IOllamaApiClient? ollamaClient = null)
     {
       _raygunClient = raygunClient;
       _aierHubContext = aierHubContext;
+      _ollamaOptions = ollamaOptions;
       _ollamaClient = ollamaClient;
     }
 
@@ -117,11 +120,11 @@ namespace RaygunAspireWebApp.Controllers
     private async Task EnsureModel()
     {
       var models = await _ollamaClient.ListLocalModels();
-      if (!models.Any(m => m.Name.StartsWith(Constants.AiModel)))
+      if (!models.Any(m => m.Name.StartsWith(_ollamaOptions.Model)))
       {
         // If the model has not been downloaded yet, then kick off that process.
         // If the model is already downloading, then this will pick up the progress of the existing download job:
-        await _ollamaClient.PullModel(Constants.AiModel, status =>
+        await _ollamaClient.PullModel(_ollamaOptions.Model, status =>
         {
           var percentage = status.Total == 0 ? 0 : status.Completed * 100 / (double)status.Total;
           // There are some initial messages in the stream that state the download has started, but do not mention the progress yet.
@@ -136,7 +139,7 @@ namespace RaygunAspireWebApp.Controllers
         while (true)
         {
           models = await _ollamaClient.ListLocalModels();
-          if (models.Any(m => m.Name.StartsWith(Constants.AiModel)))
+          if (models.Any(m => m.Name.StartsWith(_ollamaOptions.Model)))
           {
             return;
           }

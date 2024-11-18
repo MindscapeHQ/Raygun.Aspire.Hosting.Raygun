@@ -1,5 +1,6 @@
 using Mindscape.Raygun4Net.AspNetCore;
 using OllamaSharp;
+using RaygunAspireWebApp.Configuraiton;
 using RaygunAspireWebApp.Hubs;
 
 namespace RaygunAspireWebApp
@@ -23,9 +24,15 @@ namespace RaygunAspireWebApp
       builder.Services.AddSignalR();
 
       var connectionString = builder.Configuration.GetConnectionString("Ollama");
+      var ollamaOptions = new OllamaOptions
+      {
+          Model = builder.Configuration["Ollama:Model"] ?? Constants.AiModel
+      };
+      builder.Services.AddSingleton(ollamaOptions);
+
       if (!string.IsNullOrWhiteSpace(connectionString))
       {
-        builder.Services.Add(new ServiceDescriptor(typeof(IOllamaApiClient), new OllamaApiClient(connectionString, Constants.AiModel)));
+        builder.Services.Add(new ServiceDescriptor(typeof(IOllamaApiClient), new OllamaApiClient(connectionString.Replace("Endpoint=", string.Empty), ollamaOptions.Model)));
       }
 
       var app = builder.Build();

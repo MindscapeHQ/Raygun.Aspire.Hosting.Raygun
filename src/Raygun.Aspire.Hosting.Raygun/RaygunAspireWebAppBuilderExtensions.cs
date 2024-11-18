@@ -14,5 +14,26 @@ namespace Aspire.Hosting.ApplicationModel
                     .ExcludeFromManifest()
                     .PublishAsContainer();
     }
+
+    public static IResourceBuilder<RaygunAspireWebAppResource> WithOllamaReference(this IResourceBuilder<RaygunAspireWebAppResource> builder, IResourceBuilder<IResourceWithConnectionString> source, string? model = null)
+    {
+      var resource = source.Resource;
+      var connectionName = resource.Name;
+
+      if (!string.IsNullOrEmpty(model))
+      {
+        builder.WithEnvironment("Ollama:Model", model);
+      }
+      return builder
+        .WithReference(source, "Ollama")
+          .WaitFor(source)
+        .WithEnvironment(context =>
+        {
+          if (!string.IsNullOrEmpty(model))
+          {
+            context.EnvironmentVariables["Ollama:Model"] = model;
+          }
+        });
+    }
   }
 }
